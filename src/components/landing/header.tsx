@@ -11,7 +11,6 @@ const Header = () => {
       <nav className="hidden md:flex items-center gap-6 text-sm font-medium">
         <a href="#services" className="hover:text-primary transition-colors">Services</a>
         <a href="#integrations" className="hover:text-primary transition-colors">Integrations</a>
-        <a href="#pricing" className="hover:text-primary transition-colors">Pricing</a>
       </nav>
       <Button>Get Your Free AI Audit</Button>
     </header>
