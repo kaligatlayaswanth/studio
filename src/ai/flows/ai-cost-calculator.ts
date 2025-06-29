@@ -48,28 +48,27 @@ export async function calculateAiSavings(
 
 const prompt = ai.definePrompt({
   name: 'calculateAiSavingsPrompt',
-  model: 'gemma-7b-it',
+  model: 'google/gemma-7b-it',
   input: {schema: CalculateAiSavingsInputSchema},
   output: {schema: CalculateAiSavingsOutputSchema},
-  prompt: `You are an expert in cost-benefit analysis, particularly in the context of AI automation.
+  prompt: `You are an expert in cost-benefit analysis for AI automation.
+Based on the provided inputs, calculate the estimated time saved, cost savings, and the return on investment (ROI) timeframe.
 
-  Based on the following inputs, calculate the estimated time saved, cost savings, and the return on investment (ROI) timeframe for implementing an AI solution.
+Inputs:
+- Current Monthly Cost: {{{currentMonthlyCost}}}
+- Current Hours Spent: {{{currentHoursSpent}}}
+- Hourly Rate: {{{hourlyRate}}}
+- AI Implementation Cost: {{{aiImplementationCost}}}
+- AI Monthly Cost: {{{aiMonthlyCost}}}
 
-  Current Monthly Cost: {{{currentMonthlyCost}}}
-  Current Hours Spent: {{{currentHoursSpent}}}
-  Hourly Rate: {{{hourlyRate}}}
-  AI Implementation Cost: {{{aiImplementationCost}}}
-  AI Monthly Cost: {{{aiMonthlyCost}}}
+Calculation Instructions:
+1.  **Estimated Time Saved**: Assume AI automation reduces the "Current Hours Spent" by 75%. Calculate the total hours saved per month.
+2.  **Estimated Cost Savings**: This is the "Current Monthly Cost" minus the "AI Monthly Cost".
+3.  **ROI (Months)**: This is the "AI Implementation Cost" divided by the "Estimated Cost Savings". If "Estimated Cost Savings" is zero or negative, set "roiMonths" to 999.
+4.  **Summary**: Provide a concise, optimistic summary of the cost savings analysis, highlighting the key benefits of AI automation.
 
-  Provide a concise summary of the cost savings analysis, highlighting the key benefits of AI automation.
-
-  Make sure all numbers in the output are rounded to 2 decimal places.
-
-  Estimated Time Saved: The difference between current hours spent and the AI's impact on reducing those hours.
-  Estimated Cost Savings: The difference between the current monthly cost and the AI monthly cost, factoring in the hourly rate.
-  ROI (Months): The number of months it takes to recover the initial AI implementation cost, based on the monthly cost savings.
-  Summary: A brief explanation of the financial advantages of adopting the AI solution.
-  `,
+Return the result in the specified JSON format. All numerical outputs should be rounded to two decimal places.
+`,
 });
 
 const calculateAiSavingsFlow = ai.defineFlow(
@@ -79,28 +78,10 @@ const calculateAiSavingsFlow = ai.defineFlow(
     outputSchema: CalculateAiSavingsOutputSchema,
   },
   async input => {
-    const {currentMonthlyCost, currentHoursSpent, hourlyRate, aiImplementationCost, aiMonthlyCost} = input;
-
-    // Calculate estimated time saved (assuming AI reduces hours spent)
-    const estimatedTimeSaved = currentHoursSpent * 0.75; // Assuming 75% reduction
-
-    // Calculate estimated cost savings
-    const estimatedCostSavings = currentMonthlyCost - aiMonthlyCost;
-
-    // Calculate ROI (in months)
-    const roiMonths = aiImplementationCost / estimatedCostSavings;
-
-    const {output} = await prompt({
-      ...input,
-      estimatedTimeSaved,
-      estimatedCostSavings,
-      roiMonths,
-    });
-    return {
-      estimatedTimeSaved: parseFloat(estimatedTimeSaved.toFixed(2)),
-      estimatedCostSavings: parseFloat(estimatedCostSavings.toFixed(2)),
-      roiMonths: parseFloat(roiMonths.toFixed(2)),
-      summary: output?.summary ?? 'No summary available.',
-    };
+    const {output} = await prompt(input);
+    if (!output) {
+      throw new Error('Failed to get a response from the AI model.');
+    }
+    return output;
   }
 );
