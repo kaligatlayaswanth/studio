@@ -14,9 +14,6 @@ const HeroSection = () => {
           <Button size="lg" variant="default" className="bg-primary hover:bg-primary/90 text-primary-foreground">
             Get Your Free AI Audit
           </Button>
-          <Button size="lg" variant="outline" className="border-primary text-primary hover:bg-primary/10 hover:text-primary">
-            See AI in Action - Book Demo
-          </Button>
         </div>
       </div>
     </section>
