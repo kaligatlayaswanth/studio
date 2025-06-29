@@ -48,6 +48,7 @@ export async function calculateAiSavings(
 
 const prompt = ai.definePrompt({
   name: 'calculateAiSavingsPrompt',
+  model: 'gemma-7b-it',
   input: {schema: CalculateAiSavingsInputSchema},
   output: {schema: CalculateAiSavingsOutputSchema},
   prompt: `You are an expert in cost-benefit analysis, particularly in the context of AI automation.

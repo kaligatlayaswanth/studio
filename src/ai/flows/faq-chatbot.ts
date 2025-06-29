@@ -39,6 +39,7 @@ export async function faqChatbot(input: FAQChatbotInput): Promise<FAQChatbotOutp
 
 const prompt = ai.definePrompt({
   name: 'faqChatbotPrompt',
+  model: 'gemma-7b-it',
   input: {schema: FAQChatbotInputSchema},
   output: {schema: FAQChatbotOutputSchema},
   prompt: `You are an AI-driven FAQ chatbot designed to answer user questions based on a provided knowledge base and any additional context the user provides.
