@@ -12,7 +12,7 @@ const ContactSection = () => {
             </p>
             <div className="mt-8">
                 <Button asChild size="lg">
-                    <a href="mailto:hello@lovable.ai">Get in Touch</a>
+                    <a href="mailto:hello@repeater.ai">Get in Touch</a>
                 </Button>
             </div>
         </div>
