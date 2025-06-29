@@ -26,7 +26,7 @@ export async function getAiSavings(data: CalculateAiSavingsInput) {
 }
 
 const faqSchema = z.object({
-  question: z.string().min(5),
+  question: z.string().min(1),
   knowledge: z.string().optional(),
 });
 
