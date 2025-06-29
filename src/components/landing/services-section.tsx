@@ -7,19 +7,21 @@ import {
   DatabaseZap,
   KanbanSquare,
   ShieldCheck,
+  Star,
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 const services = [
   {
-    icon: <Mail className="h-8 w-8" />,
-    title: "Business Communication",
-    description: "AI-powered email management, automated sorting, and multi-language support.",
-  },
-  {
     icon: <BotMessageSquare className="h-8 w-8" />,
     title: "Customer Support & Chatbots",
     description: "24/7 AI support agents for Telegram, Discord, WhatsApp with knowledge base integration.",
+    isStar: true,
+  },
+  {
+    icon: <Mail className="h-8 w-8" />,
+    title: "Business Communication",
+    description: "AI-powered email management, automated sorting, and multi-language support.",
   },
   {
     icon: <PenTool className="h-8 w-8" />,
@@ -69,8 +71,15 @@ const ServicesSection = () => {
           {services.map((service, index) => (
             <Card
               key={index}
-              className="group relative overflow-hidden rounded-xl border-white/10 bg-black/20 backdrop-blur-sm transition-all duration-300 hover:border-primary/50 hover:bg-primary/10"
+              className={`group relative overflow-hidden rounded-xl border-white/10 bg-black/20 backdrop-blur-sm transition-all duration-300 hover:border-primary/50 hover:bg-primary/10 ${
+                service.isStar ? 'border-primary ring-2 ring-primary shadow-lg shadow-primary/20' : ''
+              }`}
             >
+              {service.isStar && (
+                <div className="absolute top-2 right-2 z-10 rounded-full bg-primary p-1.5 text-primary-foreground">
+                  <Star className="h-4 w-4" />
+                </div>
+              )}
               <div className="absolute -inset-px rounded-xl bg-gradient-to-r from-primary/30 to-accent/30 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
               <CardHeader className="relative z-10 flex flex-row items-center gap-4">
                 <div className="text-primary">{service.icon}</div>
