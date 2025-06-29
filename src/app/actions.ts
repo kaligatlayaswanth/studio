@@ -20,8 +20,9 @@ export async function getAiSavings(data: CalculateAiSavingsInput) {
   try {
     const result = await calculateAiSavings(validatedData.data);
     return { success: result };
-  } catch (e) {
-    return { error: "Failed to calculate savings." };
+  } catch (e: any) {
+    console.error(e);
+    return { error: e.message || "Failed to calculate savings." };
   }
 }
 
@@ -38,7 +39,8 @@ export async function getFaqAnswer(data: Pick<FAQChatbotInput, 'question' | 'kno
   try {
     const result = await faqChatbot(validatedData.data);
     return { success: result };
-  } catch (e) {
-    return { error: "Failed to get an answer." };
+  } catch (e: any) {
+    console.error(e);
+    return { error: e.message || "Failed to get an answer." };
   }
 }

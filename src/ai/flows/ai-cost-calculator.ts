@@ -67,7 +67,7 @@ Calculation Instructions:
 3.  **ROI (Months)**: This is the "AI Implementation Cost" divided by the "Estimated Cost Savings". If "Estimated Cost Savings" is zero or negative, set "roiMonths" to 999.
 4.  **Summary**: Provide a concise, optimistic summary of the cost savings analysis, highlighting the key benefits of AI automation.
 
-Return the result in the specified JSON format. All numerical outputs should be rounded to two decimal places.
+You MUST respond with a valid JSON object that adheres to the defined output schema. All numerical outputs should be rounded to two decimal places.
 `,
 });
 
@@ -80,7 +80,7 @@ const calculateAiSavingsFlow = ai.defineFlow(
   async input => {
     const {output} = await prompt(input);
     if (!output) {
-      throw new Error('Failed to get a response from the AI model.');
+      throw new Error('The AI model failed to produce a valid JSON output.');
     }
     return output;
   }

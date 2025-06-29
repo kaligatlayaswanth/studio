@@ -61,6 +61,8 @@ There is no additional context provided.
 Question: {{{question}}}
 
 Answer the user's question clearly and concisely, referencing the knowledge base and additional context where relevant. If the knowledge base does not contain relevant information, use your own knowledge to provide a helpful answer. If there is no knowledge base or additional context, answer from your own knowledge base.
+
+You MUST respond with a valid JSON object that adheres to the defined output schema.
 `,
 });
 
@@ -72,6 +74,9 @@ const faqChatbotFlow = ai.defineFlow(
   },
   async input => {
     const {output} = await prompt(input);
-    return output!;
+    if (!output) {
+      throw new Error('The AI model failed to produce a valid JSON output.');
+    }
+    return output;
   }
 );
