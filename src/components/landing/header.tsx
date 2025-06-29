@@ -12,7 +12,6 @@ const Header = () => {
         <a href="#services" className="hover:text-primary transition-colors">Services</a>
         <a href="#integrations" className="hover:text-primary transition-colors">Integrations</a>
         <a href="#pricing" className="hover:text-primary transition-colors">Pricing</a>
-        <a href="#faq" className="hover:text-primary transition-colors">FAQ</a>
       </nav>
       <Button>Get Your Free AI Audit</Button>
     </header>
